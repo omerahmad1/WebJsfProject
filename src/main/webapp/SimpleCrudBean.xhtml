@@ -1,53 +1,80 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 <head>
-    <title>Simple CRUD</title>
+<meta charset="utf-8" name="viewport"
+	content="width=device-width, initial-scale=1"
+	http-equiv="X-UA-Conpatible" />
+
+<h:outputStylesheet library="components" name="common_css_js"/>
+<h:outputStylesheet library="css" name="style.css"/>
+<title>Simple CRUD</title>
+
 </head>
-    
+
 <body>
-    <h3>List students</h3>
-    <h:form rendered="#{not empty simpleCrudBean.list}">
-        <h:dataTable value="#{simpleCrudBean.list}" var="item">
-            <h:column><f:facet name="header">ID</f:facet>#{item.id}</h:column>
-            <h:column><f:facet name="header">Name</f:facet>#{item.name}</h:column>
-            <h:column>
-                <h:commandButton value="edit" action="#{simpleCrudBean.edit(item)}" />
-            </h:column>
-            <h:column>
-                <h:commandButton value="delete" action="#{simpleCrudBean.delete(item)}" />
-            </h:column>
-        </h:dataTable>
-    </h:form>
-    
-    <h:panelGroup rendered="#{empty simpleCrudBean.list}">
-        <p>No students! Please add students.</p>
-    </h:panelGroup>
-    
-    <h:panelGroup rendered="#{!simpleCrudBean.edit}">
-        <h3>Add student</h3>
-        <h:form>
-            <p>Name: <h:inputText value="#{simpleCrudBean.item.name}" /></p>
-            <p>
-                <h:commandButton value="add" action="#{simpleCrudBean.add}" />
-                <h:commandButton value="reset" action="#{simpleCrudBean.resetAdd}" />
-            </p>
-        </h:form>
-    </h:panelGroup>
-    
-    <h:panelGroup rendered="#{simpleCrudBean.edit}">
-        <h3>Edit student #{simpleCrudBean.item.id}</h3>
-        <h:form>
-            <p>Name: <h:inputText value="#{simpleCrudBean.item.name}" /></p>
-            <p>
-                <h:commandButton value="save" action="#{simpleCrudBean.saveEdit}" />
-                <h:commandButton value="cancel" action="#{simpleCrudBean.cancelEdit}" />
-            </p>
-        </h:form>
-    </h:panelGroup>
-    <p>
-        <a href="#{appUrlStore.baseUrl}">Go back to index</a>
-    </p>
+
+	<h1>List students</h1>
+	<h:panelGrid>
+		<h:form rendered="#{not empty simpleCrudBean.list}">
+
+			<h:dataTable  value="#{simpleCrudBean.list}" var="item"
+			         styleClass="order-table"
+			         headerClass="order-table-header"
+			         rowClasses="order-table-odd-row,oder-table-even-row"
+			         bgcolor="body">
+				<h:column >
+					<f:facet name="header">ID</f:facet>#{item.id}</h:column>
+				<h:column>
+					<f:facet name="header">Name</f:facet>#{item.name}</h:column>
+				<h:column>
+				<f:facet name="header">Edit</f:facet>
+					<h:commandButton value="edit" action="#{simpleCrudBean.edit(item)}" />
+				</h:column>
+				<h:column>
+				<f:facet name="header">Delete</f:facet>
+					<h:commandButton value="delete"
+						action="#{simpleCrudBean.delete(item)}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		</h:panelGrid>
+	
+
+	<h:panelGroup rendered="#{empty simpleCrudBean.list}">
+		<center>
+			<p>No students! Please add students.</p>
+		</center>
+	</h:panelGroup>
+
+	<h:panelGroup >
+		<h3>Add student</h3>
+		<h:form>
+			<p>
+				Name:
+				<h:inputText value="#{simpleCrudBean.item.name}" />
+			</p>
+			<p>
+				<h:commandButton value="add" action="#{simpleCrudBean.add}" />
+				<h:commandButton value="reset" action="#{simpleCrudBean.resetAdd}" />
+			</p>
+		</h:form>
+	</h:panelGroup>
+
+	<h:panelGroup style="text-align: center;" rendered="#{simpleCrudBean.edit}">
+		<h3>Edit student #{simpleCrudBean.item.id}</h3>
+		<h:form>
+			<p>
+				Name:
+				<h:inputText value="#{simpleCrudBean.item.name}" />
+			</p>
+			<p>
+				<h:commandButton value="save" action="#{simpleCrudBean.saveEdit}" />
+				<h:commandButton value="cancel"
+					action="#{simpleCrudBean.cancelEdit}" />
+			</p>
+		</h:form>
+	</h:panelGroup>
 </body>
 </html>
